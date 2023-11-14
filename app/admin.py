@@ -14,12 +14,15 @@ class AuthenticatedUser(BaseView):
         return current_user.is_authenticated
 
 
-class AuthenticatedAdmin(ModelView):
+class AuthenticatedAdmin1(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.user_role == UserRoleEnum.ADMIN
 
+class AuthenticatedAdmin2(BaseView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.user_role == UserRoleEnum.ADMIN
 
-class MyProductView(AuthenticatedAdmin):
+class MyProductView(AuthenticatedAdmin1):
     column_list = ['id', 'name', 'price', 'category']
     column_searchable_list = ['name']
     column_filters = ['price', 'name']
@@ -27,16 +30,16 @@ class MyProductView(AuthenticatedAdmin):
     can_view_details = True
 
 
-class MyCategoryView(AuthenticatedAdmin):
+class MyCategoryView(AuthenticatedAdmin1):
     column_list = ['name', 'products']
 
 
-class MyStatsView(AuthenticatedUser):
+class MyStatsView(AuthenticatedAdmin2):
     @expose("/")
     def index(self):
         return self.render('admin/status.html')
 
-class MyLogoutView(AuthenticatedUser):
+class MyLogoutView(BaseView):
     @expose("/")
     def index(self):
         logout_user()
