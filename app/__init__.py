@@ -7,8 +7,6 @@ app = Flask(__name__)
 app.secret_key = '^%^&$^T&*Y(*&*^&*^*(&&*$^4765876986764^&%&*%^%$&*^(*^*%*&^436'
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://root:%s@localhost/saledbv1?charset=utf8mb4' % quote('Admin@1234')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-app.config["SQLALCHEMY_RECORD_QUERIES"] = True
-app.config["PAGE_SIZE"] = 6
 
 db = SQLAlchemy(app=app)
 login = LoginManager(app=app)
